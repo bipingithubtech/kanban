@@ -5,6 +5,7 @@ import { UserRoutes } from "./RoutesRepository/RegisterLoginPage.js";
 import { BoardRoutes } from "./RoutesRepository/BoardRepo.js";
 import { ListRoutes } from "./RoutesRepository/ListRopoRoute.js";
 import cookieParser from "cookie-parser";
+import { TaskRouter } from "./RoutesRepository/Task.js";
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use("/api/Register/", UserRoutes);
 app.use("/api/Board/", BoardRoutes);
 app.use("/api/List/", ListRoutes);
+app.use("/api", TaskRouter);
 app.listen(port, () => {
   console.log(`lsitening to port ${port}`);
   DatabaseCofig();
