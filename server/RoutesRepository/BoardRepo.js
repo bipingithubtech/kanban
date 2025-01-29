@@ -17,27 +17,27 @@ BoardRoutes.post("/createBoard", jwtMiddleware, async (req, res) => {
   }
 });
 // getting board of particular user
-BoardRoutes.get("/:userId", jwtMiddleware, async (req, res) => {
-  const { userId } = req.params;
 
+BoardRoutes.get("/userBorad", jwtMiddleware, async (req, res) => {
+  const userId = req.user.id;
   if (!userId) {
     return res.status(400).json({ message: "User ID is required." });
   }
 
-  if (userId !== req.user.id) {
-    return res
-      .status(403)
-      .json({ message: "Unauthorized access to this board." });
-  }
-
   try {
-    const board = await BoardModel.findOne({ userId }).populate("lists");
+    const board = await BoardModel.findOne({ userId }).populate({
+      path: "lists",
+      populate: {
+        path: "tasks",
+      },
+    });
 
     if (!board) {
       return res.status(404).json({ message: "Board not found" });
     }
 
     res.status(200).json(board);
+    console.log("boear:", board);
   } catch (error) {
     console.error("Error fetching board:", error);
     res.status(500).json({ message: "Error fetching the board." });

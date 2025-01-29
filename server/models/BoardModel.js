@@ -8,7 +8,7 @@ const BoardSchema = mongoose.Schema({
   },
   title: {
     type: String,
-    default: "My Kanban Board",
+
     trim: true,
   },
 

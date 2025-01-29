@@ -1,0 +1,97 @@
+/* Dashboard.css */
+.dashboard {
+  background-color: aliceblue;
+ 
+width: 1000px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+
+.task-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start; /* Ensures the tasks are aligned to the left */
+}
+
+.task-box {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: move;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Makes each task full-width inside a board-box */
+}
+
+@media (max-width: 768px) {
+  .task-table {
+    flex-direction: column;
+  }
+  .task-box {
+    width: 100%; /* Ensures tasks take full width on smaller screens */
+  }
+}
+
+
+.board-box {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* Style for dragging task */
+.task-box.dragging {
+  opacity: 0.5; /* Makes the task less visible during drag */
+  transform: scale(1.05); /* Slightly enlarges the task box to show it’s being dragged */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Style for when a task is hovered over a droppable area */
+.task-box.hovered {
+  background-color: #e0e0e0; /* Slightly darker background when hovered */
+  transition: background-color 0.2s ease;
+}
+
+
+h2 {
+  color: #4CAF50;
+  text-align: center;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+
+.task-box:hover {
+  background-color: #f1f1f1;
+}
+
+.task-details {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.task-details p {
+  margin: 5px 0;
+}
+
+/* Add responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .task-table {
+    flex-direction: column;
+  }
+}

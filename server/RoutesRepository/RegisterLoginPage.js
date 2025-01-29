@@ -58,7 +58,8 @@ UserRoutes.post("/login", async (req, res) => {
         .cookie("jwtToken", token, {
           httpOnly: true,
           secure: false,
-          sameSite: "none",
+          sameSite: "lax",
+          path: "/",
         })
         .json({
           message: "login sucessfully",
@@ -70,4 +71,22 @@ UserRoutes.post("/login", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
+});
+
+UserRoutes.get("/refecth", async (req, res) => {
+  const token = req.cookies.jwtToken;
+  console.log("Token received:", token);
+  if (!token) {
+    return res.status(401).json({ message: "Token missing" });
+  }
+
+  jwt.verify(token, process.env.jwt, (err, data) => {
+    if (err) {
+      console.log("Error verifying token:", err);
+      return res.status(500).json({ message: "Invalid Token" });
+    } else {
+      console.log("Token verified successfully:", data);
+      return res.status(200).json(data);
+    }
+  });
 });

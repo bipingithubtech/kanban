@@ -8,6 +8,7 @@ export const ListRoutes = express.Router();
 
 ListRoutes.post("/CreateList", jwtMiddleware, async (req, res) => {
   const { boardId, title } = req.body;
+
   if (!boardId || !title) {
     return res.status(400).json({ message: "Board ID and title are required" });
   }

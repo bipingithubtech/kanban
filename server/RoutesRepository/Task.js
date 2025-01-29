@@ -83,3 +83,93 @@ TaskRouter.delete("/deleteTask/:id", jwtMiddleware, async (req, res) => {
     res.status(500).json({ message: "Error deleting task", error });
   }
 });
+
+TaskRouter.post("/Reorder", async (req, res) => {
+  const { taskId, fromList, toList, newIndex } = req.body;
+
+  console.log("Request Body:", req.body);
+
+  try {
+    const fromListId = fromList.toString();
+    const toListId = toList.toString();
+
+    console.log("fromListId:", fromListId);
+    console.log("toListId:", toListId);
+
+    const fromListObj = await ListModel.findById(fromListId);
+    const toListObj = await ListModel.findById(toListId);
+    const taskObj = await TaskModel.findById(taskId); // Get full task details
+
+    if (!fromListObj) {
+      console.log("List not found for the given fromList ID");
+      return res
+        .status(404)
+        .json({ message: "List not found for the given fromList ID" });
+    }
+
+    if (!toListObj) {
+      console.log("List not found for the given toList ID");
+      return res
+        .status(404)
+        .json({ message: "List not found for the given toList ID" });
+    }
+
+    if (!taskObj) {
+      console.log("Task not found");
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    // ✅ Moving Task Between Different Lists
+    if (fromListId !== toListId) {
+      console.log("Moving task between different lists");
+
+      // Remove task from old list
+      await ListModel.updateOne(
+        { _id: fromListId },
+        { $pull: { tasks: taskId } }
+      );
+
+      // Add full task object to the new list at specific position
+      await ListModel.updateOne(
+        { _id: toListId },
+        {
+          $push: {
+            tasks: {
+              $each: [taskObj], // Push full task object
+              $position: newIndex,
+            },
+          },
+        }
+      );
+    }
+    // ✅ Moving Task Within the Same List (Reordering)
+    else {
+      console.log("Moving task within the same list");
+
+      // Find index of task
+      const taskIndex = fromListObj.tasks.findIndex(
+        (task) => task._id.toString() === taskId
+      );
+
+      if (taskIndex === -1) {
+        console.log("Task not found in the list");
+        return res.status(404).json({ message: "Task not found in the list" });
+      }
+
+      // Extract the task
+      const task = fromListObj.tasks.splice(taskIndex, 1)[0];
+
+      // Insert at new index
+      fromListObj.tasks.splice(newIndex, 0, task);
+
+      // Save the updated list
+      await fromListObj.save();
+    }
+
+    console.log("Task order updated successfully");
+    res.status(200).json({ message: "Task order updated successfully" });
+  } catch (error) {
+    console.error("Error updating task order:", error);
+    res.status(500).json({ message: "Error updating task order", error });
+  }
+});
