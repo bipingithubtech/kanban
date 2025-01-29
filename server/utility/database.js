@@ -8,7 +8,7 @@ const DatabaseCofig = async () => {
   try {
     mongoose.set("debug", true);
     await mongoose.connect(
-      "mongodb+srv://bipincloudshope12:EDDL3X2cP6XlSVJV@cluster0.pyhii.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+     process.env.db
     );
     console.log("Database connected successfully");
   } catch (error) {
