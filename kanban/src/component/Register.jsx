@@ -44,7 +44,7 @@ export const RegisterPage = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:8000/api/Register/signUP", {
+      const res = await axios.post("https://kanban-yuql.onrender.com/api/Register/signUP", {
         name,
         email,
         password

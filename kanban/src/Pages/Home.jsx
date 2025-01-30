@@ -11,7 +11,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://localhost:8000/api/Board/userBorad", {
+      const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token?.token}`, // Include token

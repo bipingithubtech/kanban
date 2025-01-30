@@ -20,7 +20,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/Board/userBorad", {
+        const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token?.token}`,
@@ -45,7 +45,7 @@ const KanbanBoard = () => {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/List/CreateList",
+        "https://kanban-yuql.onrender.com/api/List/CreateList",
         { title: listTitle, boardId: board._id },
         {
           withCredentials: true,
@@ -55,7 +55,7 @@ const KanbanBoard = () => {
         }
       );
 
-      const updatedBoard = await axios.get("http://localhost:8000/api/Board/userBorad", {
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token?.token}` },
       });
@@ -85,7 +85,7 @@ const KanbanBoard = () => {
     try {
       if (taskToUpdate) {
         await axios.put(
-          `http://localhost:8000/api/task/taskUpdate/${taskToUpdate._id}`,
+          `https://kanban-yuql.onrender.com/api/task/taskUpdate/${taskToUpdate._id}`,
           taskData,
           {
             withCredentials: true,
@@ -98,7 +98,7 @@ const KanbanBoard = () => {
         alert("Task updated successfully");
       } else {
         await axios.post(
-          "http://localhost:8000/api/task/crateTask",
+          "https://kanban-yuql.onrender.com/api/task/crateTask",
           taskData,
           {
             withCredentials: true,
@@ -110,7 +110,7 @@ const KanbanBoard = () => {
         alert("Task added successfully");
       }
 
-      const updatedBoard = await axios.get("http://localhost:8000/api/Board/userBorad", {
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token?.token}` },
       });
@@ -129,12 +129,12 @@ const KanbanBoard = () => {
 
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/task/deleteTask/${taskId}`, {
+      await axios.delete(`https://kanban-yuql.onrender.com/api/task/deleteTask/${taskId}`, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token?.token}` },
       });
 
-      const updatedBoard = await axios.get("http://localhost:8000/api/Board/userBorad", {
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token?.token}` },
       });

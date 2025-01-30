@@ -11,7 +11,7 @@ export  const  UserProvider=({children})=>{
  useEffect(() => {
    const getToken = async () => {
      try {
-       const res = await axios.get("http://localhost:8000/api/Register/refecth", {
+       const res = await axios.get("https://kanban-yuql.onrender.com/api/Register/refecth", {
          withCredentials: true,
        });
        setToken(res.data);

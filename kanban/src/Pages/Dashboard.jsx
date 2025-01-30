@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://localhost:8000/api/Board/userBorad", {
+      const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token?.token}`, 
@@ -54,7 +54,7 @@ const Dashboard = () => {
   
     try {
       await axios.post(
-        "http://localhost:8000/api/task/Reorder",
+        "https://kanban-yuql.onrender.com/api/task/Reorder",
         {
           taskId: movedTask._id,
           fromList: sourceBoard._id,

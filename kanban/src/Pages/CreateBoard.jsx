@@ -13,7 +13,7 @@ const CreateBoard = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/Board/createBoard",
+        "https://kanban-yuql.onrender.com/api/Board/createBoard",
         { title },
         { withCredentials: true }
       );
