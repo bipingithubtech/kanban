@@ -17,7 +17,7 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-const port = 8000;
+const port = process.env.PORT || 8000;
 app.use(cookieParser());
 app.use("/api/Register/", UserRoutes);
 app.use("/api/Board/", BoardRoutes);
