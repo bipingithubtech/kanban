@@ -20,12 +20,9 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
-        const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token?.token}`,
-          },
-        });
+        const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", 
+          { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        );
         setBoard(res.data);
         console.log(res.data);
       } catch (err) {
@@ -47,18 +44,12 @@ const KanbanBoard = () => {
       await axios.post(
         "https://kanban-yuql.onrender.com/api/List/CreateList",
         { title: listTitle, boardId: board._id },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token?.token}`,
-          },
-        }
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
 
-      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token?.token}` },
-      });
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", 
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+       );
 
       setBoard(updatedBoard.data);
       setListTitle("");
@@ -87,12 +78,7 @@ const KanbanBoard = () => {
         await axios.put(
           `https://kanban-yuql.onrender.com/api/task/taskUpdate/${taskToUpdate._id}`,
           taskData,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${token?.token}`,
-            },
-          }
+          { headers: { "Content-Type": "application/json" }, withCredentials: true }
         );
         setTaskToUpdate(null);
         alert("Task updated successfully");
@@ -100,20 +86,15 @@ const KanbanBoard = () => {
         await axios.post(
           "https://kanban-yuql.onrender.com/api/task/crateTask",
           taskData,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${token?.token}`,
-            },
-          }
+          { headers: { "Content-Type": "application/json" }, withCredentials: true }
         );
         alert("Task added successfully");
       }
 
-      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token?.token}` },
-      });
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", 
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+       
+      );
 
       setBoard(updatedBoard.data);
       setTaskTitle("");
@@ -129,15 +110,14 @@ const KanbanBoard = () => {
 
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`https://kanban-yuql.onrender.com/api/task/deleteTask/${taskId}`, {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token?.token}` },
-      });
+      await axios.delete(`https://kanban-yuql.onrender.com/api/task/deleteTask/${taskId}`, 
+       
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
 
-      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token?.token}` },
-      });
+      const updatedBoard = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", 
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
       setBoard(updatedBoard.data);
     } catch (err) {
       console.error("Error deleting task:", err.response?.data || err);

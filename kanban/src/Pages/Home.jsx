@@ -8,19 +8,32 @@ const HomePage = () => {
   const { token } = useUser();
   const [boards, setBoards] = useState();
   console.log(boards)
+  console.log("token",token)
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token?.token}`, // Include token
-        },
-      });
-      setBoards(res.data);
+      if (!token) {
+        console.log("No token available.");
+        return;  // Don't make the request if there's no token
+      }
+  
+      try {
+        const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, 
+          },
+          withCredentials: true,
+        });
+        setBoards(res.data);
+      } catch (err) {
+        console.error(err);
+      }
     };
+  
     fetch();
   }, [token]);
+  
 
 
   return (

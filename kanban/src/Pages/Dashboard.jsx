@@ -11,12 +11,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token?.token}`, 
-        },
-      });
+      const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", 
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+       );
       console.log('Fetched data:', res.data.lists)
       setData(res.data.lists);
     };
@@ -61,12 +58,8 @@ const Dashboard = () => {
           toList: destinationBoard._id,
           newIndex: destination.index,
         },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token?.token}`,
-          },
-        }
+        { headers: { "Content-Type": "application/json" }, withCredentials: true },
+        
       );
     } catch (error) {
       console.error("Error updating task order:", error);
