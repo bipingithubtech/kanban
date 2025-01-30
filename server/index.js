@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://jolly-kitten-5f6201.netlify.app/",
 
   credentials: true,
 };
