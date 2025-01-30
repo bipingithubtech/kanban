@@ -33,7 +33,7 @@ TaskRouter.get("/task/:listId", async (req, res) => {
   }
 });
 
-// get task of specific id
+
 TaskRouter.get("/task/:id", jwtMiddleware, async (req, res) => {
   const { id } = req.params;
 
@@ -119,7 +119,7 @@ TaskRouter.post("/Reorder", async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    // ✅ Moving Task Between Different Lists
+  
     if (fromListId !== toListId) {
       console.log("Moving task between different lists");
 
@@ -142,7 +142,7 @@ TaskRouter.post("/Reorder", async (req, res) => {
         }
       );
     }
-    // ✅ Moving Task Within the Same List (Reordering)
+
     else {
       console.log("Moving task within the same list");
 
