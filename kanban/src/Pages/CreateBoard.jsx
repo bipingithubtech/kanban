@@ -15,7 +15,7 @@ const CreateBoard = () => {
       const res = await axios.post(
         "https://kanban-yuql.onrender.com/api/Board/createBoard",
         { title },
-        { withCredentials: true }
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
       console.log(res.data);
       alert("Successfully created");

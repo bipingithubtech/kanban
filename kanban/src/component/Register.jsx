@@ -1,60 +1,46 @@
 import React, { useReducer } from "react";
 import "../css/Auth.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const RegisterPage = () => {
-  const initialState = {
-    name: "",
-    email: "",
-    password: ""
-  };
+  const navigate = useNavigate();
+
+  const initialState = { name: "", email: "", password: "" };
 
   const reducer = (state, action) => {
-    switch (action.type) {
-      case "SET_FIELD":
-        return {
-          ...state,
-          [action.field]: action.value
-        };
-      default:
-        return state;
+    if (action.type === "SET_FIELD") {
+      return { ...state, [action.field]: action.value };
     }
+    return state;
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch({
-      type: "SET_FIELD",
-      field: name,
-      value: value
-    });
+    dispatch({ type: "SET_FIELD", field: name, value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { name, email, password } = state;
-
-    if (!name || !email || !password) {
+    if (!state.name || !state.email || !state.password) {
       alert("Please fill out all fields.");
       return;
     }
 
     try {
-      const res = await axios.post("https://kanban-yuql.onrender.com/api/Register/signUP", {
-        name,
-        email,
-        password
-      });
+      await axios.post(
+        "https://kanban-yuql.onrender.com/api/Register/signUP",
+        state,
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
 
-      alert("Registration successful!");
-      console.log(res.data);
+      alert("Registration successful! Redirecting to login...");
+      navigate("/loginpage");
     } catch (error) {
-      console.error(error);
-      alert("Registration failed. Please try again.");
+      console.error("Registration failed:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Registration failed, try again.");
     }
   };
 
@@ -64,42 +50,21 @@ export const RegisterPage = () => {
         <h2 className="auth-title">Register</h2>
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              value={state.name}
-              placeholder="Enter your name"
-              name="name"
-              onChange={setChange}
-            />
+            <label>Name</label>
+            <input type="text" name="name" value={state.name} onChange={handleChange} placeholder="Enter your name" required />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={state.email}
-              placeholder="Enter your email"
-              name="email"
-              onChange={setChange}
-            />
+            <label>Email</label>
+            <input type="email" name="email" value={state.email} onChange={handleChange} placeholder="Enter your email" required />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={state.password}
-              placeholder="Enter your password"
-              name="password"
-              onChange={setChange}
-            />
+            <label>Password</label>
+            <input type="password" name="password" value={state.password} onChange={handleChange} placeholder="Enter your password" required />
           </div>
           <button type="submit" className="auth-button">Register</button>
         </form>
         <p className="auth-footer">
-          Already have an account? <Link to={"/loginpage"}>Login</Link>
+          Already have an account? <Link to="/loginpage">Login</Link>
         </p>
       </div>
     </div>
