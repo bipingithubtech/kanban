@@ -4,7 +4,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
 
   useEffect(() => {
     const getToken = async () => {
@@ -15,16 +23,13 @@ export const UserProvider = ({ children }) => {
         );
 
         if (res.data && typeof res.data === "string") {
-          setToken(res.data); // Ensure only the token is stored
+          setToken(res.data);
+          localStorage.setItem("token", res.data);
         } else {
           console.error("Unexpected response format:", res.data);
         }
       } catch (err) {
-        if (err.response?.status === 401) {
-          console.error("Unauthorized: Token is missing or invalid");
-        } else {
-          console.error("Error fetching token:", err);
-        }
+        console.error("Error fetching token:", err);
       }
     };
 
@@ -37,6 +42,7 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
 
 export const useUser = () => {
   const context = useContext(UserContext);

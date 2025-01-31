@@ -20,22 +20,26 @@ export const LoginPage = () => {
       alert("Please enter both email and password.");
       return;
     }
-
+  
     try {
       const res = await axios.post(
         "https://kanban-yuql.onrender.com/api/Register/login",
         state,
         { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
-
+  
       console.log("Login successful:", res.data);
-      setToken(res.data.token); // Save only the token
-      navigate("/");
+      if (res.data.token) {
+        setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
       alert(error.response?.data?.message || "Login failed, try again.");
     }
   };
+  
 
   return (
     <div className="auth-container">

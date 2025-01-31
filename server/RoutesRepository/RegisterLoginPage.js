@@ -83,10 +83,10 @@ UserRoutes.get("/refecth", async (req, res) => {
   jwt.verify(token, process.env.jwt, (err, data) => {
     if (err) {
       console.log("Error verifying token:", err);
-      return res.status(500).json({ message: "Invalid Token" });
+      return res.status(401).json({ message: "Invalid Token" });
     } else {
       console.log("Token verified successfully:", data);
-      return res.status(200).json(data);
+      return res.status(200).json({ token });
     }
   });
 });
