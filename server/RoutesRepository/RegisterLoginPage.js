@@ -58,7 +58,7 @@ UserRoutes.post("/login", async (req, res) => {
         .cookie("jwtToken", token, {
           httpOnly: true,
           secure: false,
-          sameSite: "lax",
+          sameSite: "none",
           path: "/",
         })
         .json({
