@@ -2,26 +2,26 @@ import { useUser } from "../Storage/Token";
 import { useState,useEffect, } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import "../css/HomePage.css"
 
 const HomePage = () => {
   const { token } = useUser();
   const [boards, setBoards] = useState();
 
+  console.log("board data",boards)
+
   useEffect(() => {
     const fetch = async () => {
       if (!token) {
         console.log("No token available.");
-        return;  // Don't make the request if there's no token
+        return;  
       }
 
-      console.log("Sending token:", token);  // Log token
+      console.log("Sending token from home page:", token);  // Log token
 
       try {
         const res = await axios.get("https://kanban-yuql.onrender.com/api/Board/userBorad", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
-          },
+        withCredentials:true
         });
 
         console.log("API Response:", res.data);  // Log the response data

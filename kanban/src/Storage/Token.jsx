@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
         const res = await axios.get(
           "https://kanban-yuql.onrender.com/api/Register/refecth",
           {
-            withCredentials: true, // Include credentials (cookies) in the request
+            withCredentials: true, 
           }
         );
         console.log("Fetched token:", res.data);
