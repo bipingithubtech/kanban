@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "https://cheery-arithmetic-599aa8.netlify.app",
+  origin: "http://localhost:5173",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
 
