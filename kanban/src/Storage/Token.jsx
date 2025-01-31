@@ -5,37 +5,36 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  console.log("token is ",token)
+  console.log("token is this ",token)
 
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      console.log("token is in useeffect ",token)
     } else {
       localStorage.removeItem("token");
     }
   }, [token]);
-
   useEffect(() => {
-    const getToken = async () => {
+    // Function to fetch the access token from the backend
+    const getAccessToken = async () => {
       try {
         const res = await axios.get(
           "https://kanban-yuql.onrender.com/api/Register/refecth",
-          { withCredentials: true }
+          {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }
         );
-
-        if (res.data && typeof res.data === "string") {
-          setToken(res.data);
-          localStorage.setItem("token", res.data);
-        } else {
-          console.error("Unexpected response format:", res.data);
-        }
+        console.log("Fetched token:", res.data);
+        setToken(res.data); // Set the token in the state
       } catch (err) {
-        console.error("Error fetching token:", err);
+        console.error("Problem in getAccessToken:", err);
       }
     };
 
-    getToken();
-  }, []);
+    // Call the function to fetch the token
+    getAccessToken();
+  }, []); 
 
   return (
     <UserContext.Provider value={{ token, setToken }}>
