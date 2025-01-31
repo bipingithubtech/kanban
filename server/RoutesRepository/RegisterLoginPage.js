@@ -57,7 +57,7 @@ UserRoutes.post("/login", async (req, res) => {
         .status(200)
         .cookie("jwtToken", token, {
           httpOnly: true,
-          secure: false,
+          secure: process.env.NODE_ENV === "production",
           sameSite: "none",
           path: "/",
         })
