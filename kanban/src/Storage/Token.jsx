@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
       }
     };
 
-    // Call the function to fetch the token
+   
     getAccessToken();
   }, []); 
 

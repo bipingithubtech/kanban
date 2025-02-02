@@ -42,7 +42,7 @@ const HomePage = () => {
       });
 
       setToken(null); // Clear token
-      navigate("/loginpage"); // Redirect to login page
+      navigate("/register"); // Redirect to login page
     } catch (err) {
       console.error("Error logging out:", err);
     }
