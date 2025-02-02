@@ -27,11 +27,7 @@
     margin-bottom: 20px;
   }
   
-  .cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
+  
   
   .cta-buttons .btn {
     padding: 10px 20px;
@@ -53,5 +49,23 @@
   
   .cta-buttons .btn:hover {
     opacity: 0.8;
+  }
+    
+  .cta-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .btn-sm {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .btn-sm:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
   

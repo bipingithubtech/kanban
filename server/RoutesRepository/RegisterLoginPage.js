@@ -90,3 +90,14 @@ UserRoutes.get("/refecth", async (req, res) => {
     }
   });
 });
+
+UserRoutes.get("/logout", (req, res) => {
+  try {
+    res
+      .clearCookie("jwtToken", { sameSite: "none", secure: true })
+      .status(200)
+      .send("sucessfully logout");
+  } catch (err) {
+    res.status(500).send("unable to logout", err);
+  }
+});
