@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "https://managerapllication.netlify.app",
+  origin: " http://localhost:5173",
 
   allowedHeaders: "Content-Type,Authorization",
 
