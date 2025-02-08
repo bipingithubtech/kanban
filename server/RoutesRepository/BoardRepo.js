@@ -16,6 +16,11 @@ BoardRoutes.post("/createBoard", jwtMiddleware, async (req, res) => {
     res.status(500).json({ message: "Error creating board", error });
   }
 });
+
+BoardRoutes.get("/allUser", async (req, res) => {
+  const getTheUser = BoardModel.find({});
+  res.status(200).json({ allUser: getTheUser });
+});
 // getting board of particular user
 
 BoardRoutes.get("/userBorad", jwtMiddleware, async (req, res) => {
@@ -74,6 +79,7 @@ BoardRoutes.delete("/boards/:boardId", async (req, res) => {
     if (!board) {
       return res.status(404).json({ message: "Board not found" });
     }
+
     const list = await ListModel.find({ boardId });
     const listIds = list.map((list) => list._id);
     await TaskModel.deleteMany({ listId: { $in: listIds } });

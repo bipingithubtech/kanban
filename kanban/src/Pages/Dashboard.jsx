@@ -38,13 +38,13 @@ const Dashboard = () => {
     }
   
     const movedTask = sourceBoard.tasks[source.index];
-    console.log('Moved task:', movedTask); // Log the moved task
+    console.log('Moved task:', movedTask); 
   
-    // Remove from source and add to destination
+   
     sourceBoard.tasks.splice(source.index, 1);
     destinationBoard.tasks.splice(destination.index, 0, movedTask);
   
-    console.log('Updated data after move:', updatedData); // Log the updated data
+    console.log('Updated data after move:', updatedData); 
   
     // Update state
     setData(updatedData);
@@ -84,7 +84,7 @@ const Dashboard = () => {
                         <h2>{board.title}</h2>
                         <div className="tasks-container">
                         {board.tasks.map((task, taskIndex) => {
-  console.log('Task ID:', task._id); // Log the task ID
+ 
   return (
     <Draggable key={task._id} draggableId={task._id} index={taskIndex}>
       {(provided) => (
