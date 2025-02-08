@@ -18,10 +18,27 @@ BoardRoutes.post("/createBoard", jwtMiddleware, async (req, res) => {
 });
 
 BoardRoutes.get("/allUser", async (req, res) => {
-  const getTheUser = await BoardModel.find({})
-    .populate("userId")
-    .populate("lists");
-  res.status(200).json({ getTheUser });
+  try {
+    const getTheUser = await BoardModel.find({})
+      .populate("userId")
+      .populate("lists");
+
+    const getList = getTheUser.list.map((list) => {
+      return list;
+    });
+
+    const getTaskPriority = getList.tasks.filter((taskval) => {
+      return taskval.priority === "High";
+    });
+    if (getTaskPriority.length > 0) {
+      return { boardId: board._id, user: board.userId, highPriorityTasks };
+    }
+
+    res.status(200).json(getTaskPriority);
+  } catch (error) {
+    console.error("Error fetching boards:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 // getting board of particular user
 
