@@ -18,7 +18,7 @@ BoardRoutes.post("/createBoard", jwtMiddleware, async (req, res) => {
 });
 
 BoardRoutes.get("/allUser", async (req, res) => {
-  const getTheUser = await BoardModel.find({});
+  const getTheUser = await BoardModel.find({}).populate("userId");
   res.status(200).json({ getTheUser });
 });
 // getting board of particular user
